@@ -11,6 +11,7 @@ body {
   width: 150px;
   font-size: 46px;
   color: pink;
+  vertical-align: top;
 }
 .resetButton {
   color: purple;
