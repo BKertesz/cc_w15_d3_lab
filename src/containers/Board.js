@@ -18,18 +18,17 @@ class Board extends React.Component {
       // console.log('Already in use!')
       return
     }
-    this.checkWinner(this.state.status)
     if(this.state.playerXturn){
       const newArray = this.state.status.slice()
       newArray[event.target.value] = "X"
-      this.setState({status:newArray, playerXturn:false})
+      this.setState({status:newArray, playerXturn:false},() => this.checkWinner(this.state.status))
 
 
     }
     else{
       const newArray = this.state.status.slice()
       newArray[event.target.value] = "O"
-      this.setState({status:newArray, playerXturn:true})
+      this.setState({status:newArray, playerXturn:true},() => this.checkWinner(this.state.status))
 
     }
   }
@@ -49,8 +48,7 @@ class Board extends React.Component {
       const [a,b,c] = rows[i]
       if(squares[a] && squares[a] === squares[b] && squares[a] === squares[c]){
         console.log("Player ",squares[a], "wins!") ;
-        this.setState({ winner: squares[a] })
-        this.resetBoard()
+        this.setState({ winner: squares[a]})
       }
     }
     return null;
