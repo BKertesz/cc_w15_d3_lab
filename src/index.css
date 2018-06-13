@@ -1,0 +1,20 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+
+
+.boardSquare{
+  height: 200px;
+  width: 200px;
+  font-size: 56px;
+  color: pink;
+}
+.resetButton {
+  color: purple;
+  height: 40px;
+  width: auto;
+
+}
