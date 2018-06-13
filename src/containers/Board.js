@@ -7,16 +7,7 @@ class Board extends React.Component {
     this.state = {
       status: Array(9).fill(null),
       playerXturn: true,
-      winningStates:[
-        [0,1,2],
-        [3,4,5],
-        [6,7,8],
-        [0,3,6],
-        [1,4,7],
-        [2,5,8],
-        [0,4,8],
-        [2,4,6]
-      ]
+      winner:null
     }
     this.handleTurn = this.handleTurn.bind(this)
     this.resetBoard = this.resetBoard.bind(this)
@@ -27,28 +18,42 @@ class Board extends React.Component {
       // console.log('Already in use!')
       return
     }
-    //if playerXturn == true
-    //then state.status[event.target.value] = X
-    //change playerXturn = false
-    //else state.status[event.target.value] = O
-    //playerXturn = true
+    this.checkWinner(this.state.status)
     if(this.state.playerXturn){
-      const newArray = this.state.status
+      const newArray = this.state.status.slice()
       newArray[event.target.value] = "X"
-      this.setState({status:newArray})
-      this.setState({playerXturn:false})
+      this.setState({status:newArray, playerXturn:false})
+
+
     }
     else{
-      const newArray = this.state.status
+      const newArray = this.state.status.slice()
       newArray[event.target.value] = "O"
-      this.setState({status:newArray})
-      this.setState({playerXturn:true})
+      this.setState({status:newArray, playerXturn:true})
+
     }
   }
 
-  checkWinner(){
-    console.log(this.state.status)
-    console.log(this.state.winningStates)
+  checkWinner(squares){
+    const rows = [
+      [0,1,2],
+      [3,4,5],
+      [6,7,8],
+      [0,3,6],
+      [1,4,7],
+      [2,5,8],
+      [0,4,8],
+      [2,4,6]
+    ]
+    for(let i= 0; i <rows.length; i++){
+      const [a,b,c] = rows[i]
+      if(squares[a] && squares[a] === squares[b] && squares[a] === squares[c]){
+        console.log("Player ",squares[a], "wins!") ;
+        this.setState({ winner: squares[a] })
+        this.resetBoard()
+      }
+    }
+    return null;
   }
 
   renderSquare(index){
@@ -63,7 +68,7 @@ class Board extends React.Component {
   }
 
   checkPlayerTurn(){
-    this.checkWinner()
+    // this.checkWinner(this.state.status)
     if(this.state.playerXturn) {
       return "Player X's turn"
     }
@@ -75,6 +80,7 @@ class Board extends React.Component {
   render(){
     return(
       <div>
+        <h2>The winner is:{this.state.winner}</h2>
         <button className="resetButton" onClick={this.resetBoard}>Play Again</button>
         <h3>{this.checkPlayerTurn()}</h3>
 

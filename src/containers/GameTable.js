@@ -3,9 +3,9 @@ import Board from './Board'
 
 
 class GameTable extends React.Component {
-  constructor(props) {
-    super(props)
-  }
+  // constructor(props) {
+  //   super(props)
+  // }
 
   render(){
     return(
