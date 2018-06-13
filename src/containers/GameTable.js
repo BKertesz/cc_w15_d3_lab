@@ -9,8 +9,8 @@ class GameTable extends React.Component {
 
   render(){
     return(
-      <div>
-        <h1>Tic Tac Toe</h1>
+      <div className='game'>
+        <h1>Love and Death Tic Tac Toe</h1>
         <Board />
       </div>
     )

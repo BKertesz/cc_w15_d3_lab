@@ -1,5 +1,6 @@
 import React from 'react'
 import Square from '../components/Square'
+import Winner from '../components/Winner'
 
 class Board extends React.Component {
   constructor(props) {
@@ -7,7 +8,9 @@ class Board extends React.Component {
     this.state = {
       status: Array(9).fill(null),
       playerXturn: true,
-      winner:null
+      winner:null,
+      player1:"💀",
+      player2:"💖"
     }
     this.handleTurn = this.handleTurn.bind(this)
     this.resetBoard = this.resetBoard.bind(this)
@@ -20,14 +23,14 @@ class Board extends React.Component {
     }
     if(this.state.playerXturn){
       const newArray = this.state.status.slice()
-      newArray[event.target.value] = "X"
+      newArray[event.target.value] = "💀"
       this.setState({status:newArray, playerXturn:false},() => this.checkWinner(this.state.status))
 
 
     }
     else{
       const newArray = this.state.status.slice()
-      newArray[event.target.value] = "O"
+      newArray[event.target.value] = "💖"
       this.setState({status:newArray, playerXturn:true},() => this.checkWinner(this.state.status))
 
     }
@@ -62,25 +65,26 @@ class Board extends React.Component {
 
   resetBoard(){
     const clearBoard = Array(9).fill(null)
-    this.setState({status:clearBoard})
+    this.setState({status:clearBoard,winner:null})
   }
 
   checkPlayerTurn(){
     // this.checkWinner(this.state.status)
     if(this.state.playerXturn) {
-      return "Player X's turn"
+      return `Player ${this.state.player1}'s turn`
     }
     else {
-      return "Player O's turn"
+      return `Player ${this.state.player2}'s turn`
     }
   }
 
   render(){
     return(
-      <div>
-        <h2>The winner is:{this.state.winner}</h2>
+      <div className='board'>
+
         <button className="resetButton" onClick={this.resetBoard}>Play Again</button>
         <h3>{this.checkPlayerTurn()}</h3>
+        { this.state.winner && <Winner winner={this.state.winner} /> }
 
         <div className="board-row">
           {this.renderSquare(0)}
